@@ -14,6 +14,5 @@ class BodyTmp: Object, Identifiable{
     @objc dynamic var id: Int = 0
     @objc dynamic var bodyTemperature: String = ""
     @objc dynamic var dateCreated: Date = Date()
-    
 }
 

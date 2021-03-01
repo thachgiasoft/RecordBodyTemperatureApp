@@ -54,6 +54,8 @@ struct BodyTemperaturePickerView: View {
                 .fontWeight(.regular)
         }
         .frame(height: 150, alignment: .center)
+        .background(Color.MyThemeColor.accentColor)
+        .cornerRadius(20)
     }
     
 }

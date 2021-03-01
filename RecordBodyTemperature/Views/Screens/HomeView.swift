@@ -47,7 +47,6 @@ struct HomeView: View {
                                     avFoundationVM.takePicture()
                                 }
                             }
-                            .border(Color.white, width: 5)
                         // Captured Image View
                         if avFoundationVM.image != nil {
                             VStack{
@@ -76,7 +75,6 @@ struct HomeView: View {
                     }
                 }
                 Button(action: {
-
                     if avFoundationVM.image != nil{
                         let bodyTemperature = String(selectedIntPart + selectedDecimalPart)
                         bodyTmpStore.bodyTemperature = bodyTemperature
@@ -111,14 +109,21 @@ struct HomeView: View {
                         print("写真を撮影してください")
                     }
                 }, label: {
-                    Text("保存")
-                        .font(.title)
-                    Image(systemName: "plus.square")
-                        .font(.title)
+                    HStack{
+                        Text("SAVE")
+                            .font(.title)
+                        Image(systemName: "plus.square")
+                            .font(.title)
+                    }
+                    .padding(10)
+                    .background(Color.gray)
+                    .cornerRadius(20)
                 })
                 Spacer()
             }
-        }.popup(isPresented: $isShowPopup, type: .toast, position: .top, animation: .easeOut, autohideIn: 2.0) {
+        }
+        // popup UI
+        .popup(isPresented: $isShowPopup, type: .toast, position: .top, animation: .easeOut, autohideIn: 2.0) {
             VStack{
                 if popupMessage == .succeededInSaveImage {
                     PopupView(systemNameImage: "checkmark", title: "success", subTitle: "写真を保存することができました")

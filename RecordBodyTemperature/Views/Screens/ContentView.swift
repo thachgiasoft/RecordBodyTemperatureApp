@@ -53,7 +53,13 @@ struct ContentView: View {
                 .highPriorityGesture(DragGesture().onEnded({ self.handleSwipe(translation: $0.translation.width)}))
         }
         .accentColor(Color.MyThemeColor.accentColor)
+        .fullScreenCover(isPresented: $isShowTutorialView, content: {
+            TutorialView()
+        })
         .onAppear {
+            // 初回起動時にチュートリアルViewを表示する
+            firstVisitStep()
+            // AVFoundationを起動
             DispatchQueue.main.async {
                 avFoundationVM.startSession()
             }
@@ -61,6 +67,7 @@ struct ContentView: View {
         }
         
         .onDisappear {
+            // AVFoundationを終了
             DispatchQueue.main.async {
                 avFoundationVM.endSession()
             }

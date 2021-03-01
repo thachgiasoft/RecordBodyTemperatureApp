@@ -133,6 +133,8 @@ struct HomeView: View {
                     PopupView(systemNameImage: "megaphone", title: "need", subTitle: "写真を撮影してください")
                 }else if popupMessage == .requiredVisionPermission {
                     PopupView(systemNameImage: "list.bullet.rectangle", title: "need", subTitle: "自動認識機能をオンにしてください")
+                }else if popupMessage == .succeededInVision{
+                    PopupView(systemNameImage: "checkmark", title: "Success", subTitle: "画像から自動認識しました")
                 }
             }
             .frame(width: UIScreen.main.bounds.width, height: 120)
@@ -152,6 +154,9 @@ struct HomeView: View {
                     let intPartAndDecimalPart = selectedBodyTemperature.split(separator: ".")
                     selectedIntPart = String(intPartAndDecimalPart[0]) + "."
                     selectedDecimalPart = String(intPartAndDecimalPart[1])
+                    // Notification Success Vision
+                    popupMessage = .succeededInVision
+                    isShowPopup.toggle()
                 }
             }
         }else {
@@ -175,8 +180,10 @@ struct HomeView_Previews: PreviewProvider {
 }
 
 enum PopupMessage {
-    case succeededInSaveImage
-    case failedToSavePicture
-    case needTakePicture
-    case requiredVisionPermission
+    case succeededInSaveImage // 画像を保存、成功時
+    case failedToSavePicture // 画像保存、失敗時
+    case needTakePicture // 写真をキャプチャしていない時
+    case requiredVisionPermission // Visionの許可が降りていない時
+    case succeededInVision // 認識が成功した時
+    
 }

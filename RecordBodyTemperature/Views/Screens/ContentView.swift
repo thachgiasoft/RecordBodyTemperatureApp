@@ -83,8 +83,10 @@ struct ContentView: View {
             print("Access more than once")
         }else{
             print("First access")
+            addDemoData()
             isShowTutorialView.toggle()
             UserDefaults.standard.set(true, forKey: CurrentUserDefault.isFirstVisit)
+            
         }
     }
     
@@ -97,6 +99,14 @@ struct ContentView: View {
         } else  if translation < -minDragTranslationForSwipe && tabViewSelection < sumTabs-1 {
             tabViewSelection += 1
         }
+    }
+    
+    private func addDemoData(){
+        bodyTmpStore.id = 123456
+        bodyTmpStore.dateCreated = Date()
+        bodyTmpStore.bodyTemperature = "36.0"
+        bodyTmpStore.addData()
+        print("Demo Dataを追加しました")
     }
 }
 

@@ -31,20 +31,20 @@ struct FileHelper {
     }
     
     func getSavedImage(fileName: String) -> UIImage {
-        if let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
-            print("Exist File Directory")
-            print("directory is -> \(directory)")
-            //MARK: TODO - ERROR OCCURRED FROM BELOW!
-            
-            let directoryAndFileName = URL(fileURLWithPath: directory.absoluteString).appendingPathComponent("\(fileName).jpeg").path
-            print(directoryAndFileName)
-            
-    
-//            print(FileManager.fileExists(direc))
-            
-            return UIImage(contentsOfFile: URL(fileURLWithPath: directory.absoluteString).appendingPathComponent("\(fileName).jpeg").path)!
+        if fileName == "123456"{
+            return UIImage(named: "demoImage")!
         }else{
-            return UIImage(named: "logo")!
+            if let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+                print("Exist File Directory")
+                print("directory is -> \(directory)")
+                //MARK: TODO - ERROR OCCURRED FROM BELOW!
+                
+                let directoryAndFileName = URL(fileURLWithPath: directory.absoluteString).appendingPathComponent("\(fileName).jpeg").path
+                print(directoryAndFileName)
+                return UIImage(contentsOfFile: URL(fileURLWithPath: directory.absoluteString).appendingPathComponent("\(fileName).jpeg").path)!
+            }else{
+                return UIImage(named: "logo")!
+            }
         }
     }
 }

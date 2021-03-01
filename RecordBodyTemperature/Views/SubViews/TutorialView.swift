@@ -13,7 +13,7 @@ struct TutorialView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        if selection == 6 {
+        if selection == 5 {
             // End of the slide show
             Button(action: {
                 print("BUTTON CLICKED")
@@ -42,11 +42,15 @@ struct TutorialView: View {
                                 .bold()
                                 .font(.title)
                                 .foregroundColor(Color.MyThemeColor.accentColor)
-                                
+                            
                             Text("チュートリアルを始めよう")
                                 .bold()
                                 .font(.title)
                                 .foregroundColor(Color.MyThemeColor.accentColor)
+                            
+                            Image("humanImage")
+                                .resizable()
+                                .scaledToFit()
                             Text("所要時間10秒")
                                 .bold()
                                 .font(.title3)
@@ -62,12 +66,9 @@ struct TutorialView: View {
                         }
                         .padding()
                         .tag(0)
-                        
-                        
-                        
                         // MARK: TUTORIAL VIEW _ 1
                         VStack{
-                            Text("もう一度撮影する")
+                            Text("自動で読み取り")
                                 .bold()
                                 .font(.title)
                                 .foregroundColor(Color.MyThemeColor.accentColor)
@@ -75,26 +76,34 @@ struct TutorialView: View {
                             Image("tutorialImage_1")
                                 .resizable()
                                 .scaledToFit()
+                            
                         }
                         .tag(1)
                         
                         // MARK: TUTORIAL VIEW _ 2
                         VStack{
-                            Text("画像を確認")
+                            Text("タップで撮影")
                                 .bold()
                                 .font(.title)
                                 .foregroundColor(Color.MyThemeColor.accentColor)
                                 .padding()
-                            Image("tutorialImage_2")
-                                .resizable()
-                                .scaledToFit()
+                            ZStack{
+                                Image("tutorialImage_1")
+                                    .resizable()
+                                    .scaledToFit()
+                                
+                                Image(systemName: "hand.tap.fill")
+                                    .font(.system(size: 120))
+                                    .foregroundColor(.orange)
+                                
+                            }
                         }
                         .tag(2)
                         
                         // MARK: TUTORIAL VIEW _ 3
                         VStack{
                             // too long
-                            Text("誤認識を修正")
+                            Text("データを安全保存")
                                 .bold()
                                 .font(.title)
                                 .foregroundColor(Color.MyThemeColor.accentColor)
@@ -105,22 +114,8 @@ struct TutorialView: View {
                         }
                         .tag(3)
                         
-                        // MARK: TUTORIAL VIEW _ 4
-                        VStack{
-                            Text("ヘルスケアに接続")
-                                .bold()
-                                .font(.title)
-                                .foregroundColor(Color.MyThemeColor.accentColor)
-                                .padding()
-                            Image("tutorialImage_4")
-                                .resizable()
-                                .scaledToFit()
-                        }
-                        .tag(4)
-                        
                         // MARK: TUTORIAL VIEW _ 5
                         Button(action: {
-                            print("BUTTON CLICKED")
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
                             Text("Let's Start".uppercased())
@@ -132,13 +127,13 @@ struct TutorialView: View {
                                 .cornerRadius(10)
                                 .shadow(radius: 20)
                         })
-                        .tag(5)
+                        .tag(4)
                         
                         // MARK: TUTORIAL VIEW _ 6
                         VStack{
                             Spacer()
                         }
-                        .tag(6)
+                        .tag(5)
                     })
                 .tabViewStyle(PageTabViewStyle())
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)

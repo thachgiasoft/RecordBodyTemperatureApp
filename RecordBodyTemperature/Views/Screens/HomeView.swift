@@ -31,6 +31,13 @@ struct HomeView: View {
     
     var body: some View {
         ZStack{
+            //MARK: Camera View
+            CALayerView(caLayer: avFoundationVM.previewLayer)
+                .onTapGesture {
+                    avFoundationVM.takePicture()
+                }
+                .edgesIgnoringSafeArea(.all)
+            
             VStack(spacing: 15){
                 HStack(){
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
@@ -59,12 +66,6 @@ struct HomeView: View {
                 )
                 Spacer()
             }
-            //MARK: Camera View
-            CALayerView(caLayer: avFoundationVM.previewLayer)
-                .onTapGesture {
-                    avFoundationVM.takePicture()
-                }
-                .edgesIgnoringSafeArea(.all)
         }
     }
     

@@ -24,56 +24,29 @@ struct ContentView: View {
     @State var isRecognizedText: Bool = true
     
     var body: some View {
-        TabView(selection: $tabViewSelection){
-            HomeView(avFoundationVM: avFoundationVM, tabViewSelection: $tabViewSelection, isRecognizedText: $isRecognizedText)
-                .onDisappear(perform: {
-                    bodyTmpStore.deInitData()
-                })
-                .tabItem{
-                    Image(systemName: "thermometer")
-                    Text("Record")
+        HomeView(avFoundationVM: avFoundationVM, tabViewSelection: $tabViewSelection, isRecognizedText: $isRecognizedText)
+            .accentColor(Color.MyThemeColor.accentColor)
+            .fullScreenCover(isPresented: $isShowTutorialView, content: {
+                TutorialView()
+            })
+            .onAppear {
+                // 初回起動時にチュートリアルViewを表示する
+                firstVisitStep()
+                // AVFoundationを起動
+                DispatchQueue.main.async {
+                    avFoundationVM.startSession()
                 }
-                .tag(0)
-                .highPriorityGesture(DragGesture().onEnded({ self.handleSwipe(translation: $0.translation.width)}))
-            LogView()
-                .environmentObject(bodyTmpStore)
-                .tabItem{
-                    Image(systemName: "waveform.path.ecg")
-                    Text("Log")
-                }
-                .tag(1)
-                .highPriorityGesture(DragGesture().onEnded({ self.handleSwipe(translation: $0.translation.width)}))
-            SettingView(isRecognizedText: $isRecognizedText)
-                .environmentObject(bodyTmpStore)
-                .tabItem{
-                    Image(systemName: "gearshape")
-                    Text("Setting")
-                }
-                .tag(2)
-                .highPriorityGesture(DragGesture().onEnded({ self.handleSwipe(translation: $0.translation.width)}))
-        }
-        .accentColor(Color.MyThemeColor.accentColor)
-        .fullScreenCover(isPresented: $isShowTutorialView, content: {
-            TutorialView()
-        })
-        .onAppear {
-            // 初回起動時にチュートリアルViewを表示する
-            firstVisitStep()
-            // AVFoundationを起動
-            DispatchQueue.main.async {
-                avFoundationVM.startSession()
+                print("startSession を始めます")
             }
-            print("startSession を始めます")
-        }
-        
-        .onDisappear {
-            // AVFoundationを終了
-            DispatchQueue.main.async {
-                avFoundationVM.endSession()
+            
+            .onDisappear {
+                // AVFoundationを終了
+                DispatchQueue.main.async {
+                    avFoundationVM.endSession()
+                }
+                bodyTmpStore.deInitData()
+                print("endSession　で終了します")
             }
-            bodyTmpStore.deInitData()
-            print("endSession　で終了します")
-        }
     }
     
     // MARK: PRIVATE FUNCTIONS
@@ -87,17 +60,6 @@ struct ContentView: View {
             isShowTutorialView.toggle()
             UserDefaults.standard.set(true, forKey: CurrentUserDefault.isFirstVisit)
             
-        }
-    }
-    
-    private func handleSwipe(translation: CGFloat) {
-        let minDragTranslationForSwipe: CGFloat = 50
-        let sumTabs: Int = 3
-        
-        if translation > minDragTranslationForSwipe && tabViewSelection > 0 {
-            tabViewSelection -= 1
-        } else  if translation < -minDragTranslationForSwipe && tabViewSelection < sumTabs-1 {
-            tabViewSelection += 1
         }
     }
     

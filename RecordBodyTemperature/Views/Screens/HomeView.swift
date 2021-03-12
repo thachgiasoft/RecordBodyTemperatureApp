@@ -51,6 +51,12 @@ struct HomeView: View {
                             .clipShape(Circle())
                     })
                 }.padding()
+                .overlay(
+                    Text("体温計AIきろく")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                )
                 Spacer()
             }
             //MARK: Camera View
@@ -58,6 +64,7 @@ struct HomeView: View {
                 .onTapGesture {
                     avFoundationVM.takePicture()
                 }
+                .edgesIgnoringSafeArea(.all)
         }
     }
     
